@@ -1,0 +1,12 @@
+# Copia este archivo como terraform.tfvars y pon el ID de tu proyecto de GCP.
+# terraform.tfvars NO se sube a GitHub (está en .gitignore).
+project_id = "TU-PROYECTO-GCP"
+
+# IA por defecto: Gemini en Vertex AI (se cobra a los créditos del proyecto, sin claves).
+# vertex_model = "gemini-3.8-flash"
+
+# Opcional: usar Microsoft Foundry (Azure OpenAI) en vez de Gemini.
+# Mejor usa ./scripts/configurar_ia.sh, que prueba la clave antes de guardarla.
+# azure_openai_endpoint   = "https://TU-RECURSO.openai.azure.com"
+# azure_openai_deployment = "gpt-4o-mini"
+# azure_openai_key        = ""
