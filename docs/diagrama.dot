@@ -1,0 +1,33 @@
+digraph G {
+  rankdir=LR; bgcolor="white"; pad=0.3; nodesep=0.35; ranksep=0.55;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, color="#1f3a5f", fillcolor="#eef3fa", penwidth=1.2];
+  edge [fontname="Helvetica", fontsize=9, color="#4a5a70", fontcolor="#33425a"];
+  ciudadano [label="Ciudadano\n(navegador)", shape=oval, fillcolor="#fff4e0", color="#b07a1e"];
+  detective [label="Detective PDI\n(navegador)", shape=oval, fillcolor="#fff4e0", color="#b07a1e"];
+  subgraph cluster_gcp {
+    label="Google Cloud · proyecto pdi-lab3-cvb-2611 · southamerica-west1 (Santiago)\nTerraform crea todo · facturado a créditos educativos";
+    fontname="Helvetica-Bold"; fontsize=11; labelloc=b; style="rounded,dashed"; color="#1a73e8";
+    run [label="Cloud Run\npdi-tramites\n(FastAPI: portal + API + bandeja)", fillcolor="#dbe8fb"];
+    gcs [label="Cloud Storage\nadjuntos\n(Nearline a 90 días)"];
+    sql [label="Cloud SQL\nPostgreSQL 15\ntrámites y estados"];
+    ingesta [label="Pub/Sub\ntramites-ingesta\n(push + reintentos)"];
+    prio [label="Pub/Sub\ntramites-prioridad-\nalta · media · baja"];
+    sm [label="Secret Manager\nclaves BD, bandeja,\ntoken Pub/Sub"];
+    ar [label="Cloud Build +\nArtifact Registry\nimagen del contenedor"];
+    vertex [label="Vertex AI\nGemini 3.8 Flash\nOCR + clasificación", fillcolor="#e6f4ea", color="#188038"];
+  }
+  foundry [label="Microsoft Foundry\n(diseño PROD /\nalternativa configurable)", style="rounded,dashed,filled", fillcolor="#f3f3f3", color="#888888", fontcolor="#555555"];
+  ciudadano -> run [label="1. formulario +\ndocumento"];
+  run -> gcs [label="2. guarda archivo"];
+  run -> sql [label="2. crea trámite\n(Recibido)"];
+  run -> ingesta [label="3. publica id"];
+  ingesta -> run [label="4. push\n/pubsub/procesar"];
+  run -> vertex [label="5. texto + imagen"];
+  vertex -> run [label="JSON: prioridad,\ncategoría, OCR"];
+  run -> prio [label="6. publica por\nprioridad"];
+  detective -> run [label="7. /bandeja\n(usuario y clave)"];
+  ciudadano -> run [label="seguimiento\n(código)", style=dashed];
+  sm -> run [style=dotted, arrowhead=none];
+  ar -> run [style=dotted, label="imagen"];
+  run -> foundry [style=dotted, color="#999999", label="opcional"];
+}
