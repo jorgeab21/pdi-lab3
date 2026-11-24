@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block cuerpo %}
+<div class="caja"><h2>Bandeja de detectives</h2><p class="suave">Ordenada por prioridad asignada por la IA. Sesión: {{ usuario }}</p>
+<table><tr><th>N.º</th><th>Prioridad</th><th>Asunto</th><th>Categoría</th><th>Estado</th><th>Recibido</th></tr>
+{% for t in filas %}<tr><td><a href="/bandeja/{{ t.id }}">{{ t.numero }}</a></td>
+<td>{% if t.prioridad %}<span class="p {{ t.prioridad }}">{{ t.prioridad }}</span>{% else %}<span class="suave">en cola</span>{% endif %}</td>
+<td>{{ t.asunto }}</td><td>{{ t.categoria or '' }}</td><td>{{ t.estado }}</td><td>{{ t.creado.strftime('%d-%m %H:%M') }}</td></tr>
+{% else %}<tr><td colspan="6" class="suave">Sin trámites todavía.</td></tr>{% endfor %}</table></div>
+{% endblock %}

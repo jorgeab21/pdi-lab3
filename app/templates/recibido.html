@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block cuerpo %}
+<div class="caja"><h2>Trámite recibido</h2>
+<p>Número de trámite: <b>{{ t.numero }}</b></p>
+<p>Puedes ver el estado en cualquier momento con este enlace (es el mismo que llegaría por correo):</p>
+<p><a href="{{ enlace }}"><code>{{ enlace }}</code></a></p>
+<p class="suave">El enlace usa un código aleatorio, no el número correlativo, para que nadie pueda ver trámites ajenos.</p></div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block cuerpo %}
+<div class="caja"><h2>{{ t.numero }} {% if t.prioridad %}<span class="p {{ t.prioridad }}">{{ t.prioridad }}</span>{% endif %}</h2>
+<p><b>{{ t.asunto }}</b> · {{ t.nombre }} ({{ t.correo }}) · Estado: {{ t.estado }}</p>
+<p><b>Resumen IA:</b> {{ t.resumen or 'pendiente' }}</p>
+<p><b>Categoría:</b> {{ t.categoria or '' }} · <b>Documento:</b> {{ t.tipo_documento or '' }} · <span class="suave">{{ t.motor_ia or '' }}</span></p>
+<p><b>Mensaje:</b></p><pre>{{ t.mensaje }}</pre>
+{% if t.texto_ocr %}<p><b>Texto extraído (OCR):</b></p><pre>{{ t.texto_ocr }}</pre>{% endif %}
+{% if t.adjunto %}<p><a href="/bandeja/{{ t.id }}/documento" target="_blank">Ver documento adjunto</a></p>{% endif %}
+<form method="post" action="/bandeja/{{ t.id }}/estado"><select name="estado"><option>En revisión</option><option>Resuelto</option></select><button>Actualizar estado</button></form>
+<p><a href="/bandeja">← Volver a la bandeja</a></p></div>
+{% endblock %}

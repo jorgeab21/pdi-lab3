@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block cuerpo %}
+<div class="caja"><h2>Seguimiento de trámite</h2>
+{% if t %}
+<p>Trámite <b>{{ t.numero }}</b></p>
+{% set pasos = ["Recibido","Clasificado","En revisión","Resuelto"] %}
+<div class="estado">{% for p in pasos %}<span class="{{ 'on' if pasos.index(p) <= pasos.index(t.estado) }}">{{ p }}</span>{% endfor %}</div>
+<p class="suave">Última actualización: {{ t.actualizado.strftime('%d-%m-%Y %H:%M') }} UTC. Esta página no muestra datos personales ni documentos.</p>
+{% else %}
+<form method="get"><label>Código de seguimiento</label><input name="codigo" value="{{ codigo }}" required><button>Consultar</button></form>
+{% if codigo %}<p>No encontramos un trámite con ese código.</p>{% endif %}
+{% endif %}</div>
+{% endblock %}

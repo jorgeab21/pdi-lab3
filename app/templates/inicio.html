@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block cuerpo %}
+<div class="caja"><h2>Enviar solicitud de trámite</h2>
+<p class="suave">Simula el correo que hoy el ciudadano envía a la casilla institucional de Migraciones. En producción este paso lo hace Microsoft Graph cuando llega un correo nuevo.</p>
+<form method="post" action="/tramites" enctype="multipart/form-data">
+<label>Nombre completo</label><input name="nombre" required>
+<label>Correo electrónico</label><input name="correo" type="email" required>
+<label>Asunto</label><input name="asunto" required placeholder="Ej.: Renovación de residencia temporal">
+<label>Mensaje</label><textarea name="mensaje" rows="5" required></textarea>
+<label>Documento (foto de cédula o pasaporte, máx. 8 MB)</label><input name="documento" type="file" accept="image/*,application/pdf">
+<button>Enviar trámite</button></form></div>
+{% endblock %}
